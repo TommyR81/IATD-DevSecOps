@@ -108,7 +108,7 @@ jobs:
           echo "Week2 submit: $WEEK2_SUBMIT"
 
   dast:
-    needs: [test, sonarqube]
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
