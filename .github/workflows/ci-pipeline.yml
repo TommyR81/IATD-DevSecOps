@@ -65,7 +65,7 @@ jobs:
 
   sonarqube:
     needs: test
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -81,7 +81,7 @@ jobs:
 
   submit_results:
     needs: [build]
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -97,6 +97,16 @@ jobs:
           inlineScript: |
             ACCESS_TOKEN=$(az account get-access-token | jq -r .accessToken)
             echo "azureAccessToken=$ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: sonarqube-report
+          path: ${{github.workspace}}
+      - uses: actions/download-artifact@v4
+        with:
+          name: zap-report
+          path: ${{github.workspace}}
+            
       - name: Upload reports
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -106,6 +116,11 @@ jobs:
           echo "Week1 container upload: $WEEK1_CONTAINER"
           WEEK2_SUBMIT=$(curl -X POST -H "Authorization: Bearer $AZURE_ACCESS_TOKEN" -d "https://$FQDN" https://devsecops-ver.azurewebsites.net/api/week2-submit)
           echo "Week2 submit: $WEEK2_SUBMIT"
+
+          SONAR_RESPONSE=$(curl -X POST -H "Authorization: Bearer $AZURE_ACCESS_TOKEN"  --data-binary @$GITHUB_WORKSPACE/sonarqube-report.json https://devsecops-ver.azurewebsites.net/api/week3-sonar-report)
+          echo "Sonar upload: $SONAR_RESPONSE"
+          ZAP_RESPONSE=$(curl -X POST -H "Authorization: Bearer $AZURE_ACCESS_TOKEN"  --data-binary @$GITHUB_WORKSPACE/report_json.json https://devsecops-ver.azurewebsites.net/api/week3-zap-report)
+          echo "Zap upload: $ZAP_RESPONSE"
 
   dast:
     needs: [test]
