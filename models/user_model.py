@@ -72,6 +72,7 @@ class User(db.Model):
 
     @staticmethod
     def get_user(username):
+        
         if vuln: 
             user_query = f"SELECT * FROM users WHERE username = '{username}'"
             print(user_query)
