@@ -81,9 +81,30 @@ jobs:
 
   submit_results:
     needs: [build]
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
+
+      
+      - name: 'Checkout code'
+        uses: actions/checkout@v2
+
+      - name: 'Log in to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Install jq
+      - name: 'Install jq'
+        run: sudo apt-get install -y jq
+
+      - name: 'Run Azure CLI Command'
+        run: |
+          az <your-commands>
+          # Assuming you use jq to process az output:
+          az <your-command> | jq .
+
+
       - uses: actions/checkout@v4
       - uses: azure/login@v1
         with:
@@ -124,6 +145,7 @@ jobs:
 
   dast:
     needs: [test]
+    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
