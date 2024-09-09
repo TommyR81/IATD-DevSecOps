@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    needs: [test, sonarqube, dast]
+    needs: [test, sonarqube, dast, image-scan, security_gate]
 
     runs-on: ubuntu-latest
 
@@ -217,7 +217,7 @@ jobs:
 
 
   security_gate:
-    needs: [sonarqube, dast, image-scan]
+    needs: [test, sonarqube, dast, image-scan]
     if: true
     runs-on: ubuntu-latest
     steps:
