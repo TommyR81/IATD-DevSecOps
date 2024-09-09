@@ -42,7 +42,7 @@ jobs:
   sonarqube:
     needs: test
     runs-on: ubuntu-latest
-    if: false
+    if: true
     
     steps:
     - uses: actions/checkout@v3
@@ -132,7 +132,7 @@ jobs:
 
   dast:
     needs: [test]
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -217,7 +217,7 @@ jobs:
 
 
   security_gate:
-    needs: [test, sonarqube, dast, image-scan]
+    needs: [sonarqube, dast, image-scan]
     if: true
     runs-on: ubuntu-latest
     steps:
