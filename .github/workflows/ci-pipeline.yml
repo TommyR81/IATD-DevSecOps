@@ -211,7 +211,7 @@ jobs:
 
   image-scan:
     needs: [test]
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
         - name: Scan image
@@ -231,7 +231,7 @@ jobs:
 
   security_gate:
     needs: [sonarqube, dast, image-scan]
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
     - name: Download sonarqube-report
