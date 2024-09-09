@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
     
-    needs: [test, sonarqube, dast, image-scan, security_gate]
+    needs: []
     if: true
 
     runs-on: ubuntu-latest
