@@ -39,7 +39,7 @@ jobs:
           IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/devops-labs:latest
         run: |
           cosign sign --yes ${IMAGE}
-          cosign verify tommyr81/devops-labs:latest    --certificate-identity-regexp "https://github.com/.*/IATD-DevSecOps/.github/workflows/ci-pipeline.yml.*"  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+          cosign verify TommyR81/devops-labs:latest    --certificate-identity-regexp "https://github.com/.*/IATD-DevSecOps/.github/workflows/ci-pipeline.yml.*"  --certificate-oidc-issuer https://token.actions.githubusercontent.com
 
 
   sonarqube:
