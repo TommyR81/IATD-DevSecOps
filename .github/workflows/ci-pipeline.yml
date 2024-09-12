@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    needs: [sonarqube, image-scan]
+    needs: [sonarqube, dast, image-scan]
     if: true
     permissions:
       id-token: write
@@ -101,7 +101,7 @@ jobs:
 
   dast:
     needs: [test]
-    if: false
+    if: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -186,7 +186,7 @@ jobs:
 
 
   security_gate:
-    needs: [sonarqube, image-scan]
+    needs: [sonarqube, dast, image-scan]
     if: false
     runs-on: ubuntu-latest
     steps:
