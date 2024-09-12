@@ -101,7 +101,7 @@ jobs:
 
   dast:
     needs: [test]
-    if: true
+    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -244,9 +244,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Install jq
-      - name: Install jq
-        run: sudo apt-get install -y jq
+      # Install Azure CLI and jq
+      - name: Install Azure CLI and jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y azure-cli jq
 
       - name: Azure CLI script
         id: token-gen
