@@ -38,9 +38,9 @@ jobs:
     if: true
     runs-on: ubuntu-latest
     steps:
-      #- uses: azure/login@v1
-      #  with:
-      #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       #- name: Azure CLI script
       #  id: token-gen
