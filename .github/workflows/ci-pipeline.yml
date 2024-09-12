@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    needs: [security_gate]
+    needs: [sonarqube, dast, image-scan]
     if: true
     permissions:
       id-token: write
